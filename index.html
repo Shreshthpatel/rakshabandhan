@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raksha Bandhan Wishes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background: black;
+    }
+
+    #startScreen, #mainScreen, #messageScreen {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #startScreen {
+      background: rgb(10, 0, 150);
+      cursor: pointer;
+    }
+
+    #mainScreen {
+      display: none;
+      background: url('bg.png') center/cover no-repeat;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      animation: pop 1s ease forwards;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .rakshaText {
+      font-size: 2rem;
+      font-weight: bold;
+      animation: pop 1s ease forwards;
+      animation-delay: 0.5s;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    .typewriter {
+      margin-top: 20px;
+      width: 80%;
+      font-size: 1.2rem;
+      white-space: pre-line;
+      overflow: hidden;
+    }
+
+    #nextBtn {
+      margin-top: 30px;
+      padding: 10px 25px;
+      font-size: 1rem;
+      border: 2px solid hotpink;
+      background: transparent;
+      color: hotpink;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px hotpink;
+      display: none;
+      transition: all 0.3s ease;
+    }
+
+    #nextBtn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px hotpink;
+    }
+
+    #messageScreen {
+      display: none;
+      flex-direction: column;
+      background: rgb(11, 0, 107);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .messageBox {
+      border: 2px solid hotpink;
+      padding: 25px;
+      border-radius: 12px;
+      width: 80%;
+      max-width: 500px;
+      background: transparent;
+      color: white;
+      box-shadow: 0 0 10px hotpink;
+      animation: glowBounce 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowBounce {
+      0% {
+        transform: translateY(0);
+        box-shadow: 0 0 10px hotpink;
+      }
+      100% {
+        transform: translateY(-5px);
+        box-shadow: 0 0 20px hotpink;
+      }
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="startScreen" onclick="startApp()">
+    <h1>
+        Something for you <br>Click Anywhere to Continue</h1>
+  </div>
+
+  <div id="mainScreen">
+    <img src="photo1.jpg" alt="Raksha Bandhan" class="photo" />
+    <div class="rakshaText">Happy Rakshabandhan! 😊</div>
+    <div class="typewriter" id="typewriterText"></div>
+    <button id="nextBtn" onclick="showMessageScreen()">Next</button>
+  </div>
+
+  <div id="messageScreen">
+    <h2>A Letter From Me to You 💌</h2>
+    <div class="messageBox">
+      Dear Aditi,<br><br>
+      Apne mera itna sath diya is samay 🥺,<br><br>  
+Me Aapko Promise karta hu ki me bhi apke liye hamesha available rahunga😎.<br> <br> 
+Aap merse apni har baatein bata sakti ho👍,<br> <br> 
+Aap ke hone se saghi behen na hone ka dukh mehsoos nhi hota hai🫀.<br> <br> 
+Me apke lhelp karne ke liye hamesha ready rahunga😊!<br> <br> 
+Aapne meri jitni bhi help Kari uske liye Thank you!<br> <br> 
+      Apka Abhari,<br>
+      <b>Shreshth</b>
+    </div>
+  </div>
+
+  <audio id="bgMusic" src="bg.mp3" loop></audio>
+
+  <script>
+    const lines = [
+      "Happy Raksha Bandhan to you, Aditi! 💫",
+      "Thank you for always guiding me and being there through my highs and lows.",
+      "You were the only one who truly listened when I needed it the most.",
+      "You're not just my sister - you're my strength, my support, and my safe place.",
+      "May our bond continue to grow stronger with every passing year. 💖"
+    ];
+
+    function typeLine(line, callback) {
+      let index = 0;
+      const words = line.split(" ");
+      const element = document.getElementById('typewriterText');
+      if (element.innerHTML !== "") element.innerHTML += "\n";
+
+      let interval = setInterval(() => {
+        element.innerHTML += (index === 0 ? "" : " ") + words[index];
+        index++;
+        if (index >= words.length) {
+          clearInterval(interval);
+          setTimeout(callback, 500);
+        }
+      }, 250);
+    }
+
+    function startTyping(i = 0) {
+      if (i < lines.length) {
+        typeLine(lines[i], () => startTyping(i + 1));
+      } else {
+        document.getElementById("nextBtn").style.display = "inline-block";
+      }
+    }
+
+    function startApp() {
+      document.getElementById('startScreen').style.display = 'none';
+      document.getElementById('mainScreen').style.display = 'flex';
+      document.getElementById('bgMusic').play();
+      startTyping();
+    }
+
+    function showMessageScreen() {
+      document.getElementById('mainScreen').style.display = 'none';
+      document.getElementById('messageScreen').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
